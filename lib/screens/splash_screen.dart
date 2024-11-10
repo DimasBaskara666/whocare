@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             CircleAvatar(
               backgroundImage: AssetImage(
-                  'assets/your_photo.jpg'), // Tambahkan gambar Anda di assets
+                  'assets/dimas.jpg'), // Tambahkan gambar Anda di assets
               radius: 50,
             ),
             SizedBox(height: 20),
