@@ -12,7 +12,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     // Menunda splash screen selama 5 detik, lalu navigasi ke RootNavigator
-    Timer(Duration(seconds: 10), () {
+    Timer(Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => RootNavigator()),
@@ -23,7 +23,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor:  Color.fromRGBO(0, 0, 0, 1), // Warna background sesuai dengan tema
+      backgroundColor:
+          Color.fromRGBO(0, 0, 0, 1), // Warna background sesuai dengan tema
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
