@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:whocare/screens/home_page.dart';
 
-import 'screens/dashboard.dart';
 import 'screens/bmi_calculator_page.dart';
 import 'screens/profile_page.dart';
 
@@ -20,7 +20,7 @@ class _RootNavigatorState extends State<RootNavigator> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+        padding: const EdgeInsets.symmetric(vertical: 1, horizontal: 30),
         color: Colors.black,
         child: GNav(
           backgroundColor: Colors.black,
@@ -80,13 +80,13 @@ class _RootNavigatorState extends State<RootNavigator> {
   Widget getSelectedWidget({required int index}) {
     switch (index) {
       case 0:
-        return Dashboard(); // Jadikan Dashboard sebagai halaman Home
+        return HomePage(); // Jadikan Dashboard sebagai halaman Home
       case 1:
         return BMICalculatorPage(); // Halaman BMI
       case 2:
         return ProfilePage(); // Halaman Profil
       default:
-        return Dashboard();
+        return HomePage();
     }
   }
 }
