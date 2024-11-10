@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'bmi_calculator_page.dart';
-// import 'temperature_conversion_page.dart';
-// import 'profile_page.dart';
+import 'bmi_calculator_page.dart';
+import 'temperature_conversion_page.dart';
+import 'profile_page.dart';
 
 class Dashboard extends StatelessWidget {
   @override
@@ -16,28 +16,29 @@ class Dashboard extends StatelessWidget {
           children: [
             ElevatedButton(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => BMICalculatorPage()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => BMICalculatorPage()),
+                );
               },
               child: Text('Kalkulator BMI'),
             ),
             ElevatedButton(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => TemperatureConversionPage()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => TemperatureConversionPage()),
+                );
               },
               child: Text('Konversi Suhu'),
             ),
             ElevatedButton(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => ProfilePage()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                );
               },
               child: Text('Profil'),
             ),
