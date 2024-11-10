@@ -22,10 +22,6 @@ class _TemperatureConversionPageState extends State<TemperatureConversionPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Konversi Suhu'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
-        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

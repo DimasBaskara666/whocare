@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'temperature_conversion_page.dart';
 import 'basic_calculator_page.dart';
-// import 'currency_conversion_page.dart';
+import 'currency_conversion_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -36,11 +36,11 @@ class HomePage extends StatelessWidget {
           SizedBox(height: 10),
           ElevatedButton(
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //       builder: (context) => CurrencyConversionPage()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CurrencyConversionPage()),
+              );
             },
             child: Text('Konversi Mata Uang'),
           ),
