@@ -21,14 +21,13 @@ class _RootNavigatorState extends State<RootNavigator> {
     return Scaffold(
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
-        color: Colors.blue,
         child: GNav(
-          backgroundColor: Colors.blue,
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           rippleColor: Colors.blue.shade900,
           tabBackgroundColor: const Color.fromRGBO(114, 192, 255, 1),
           hoverColor: const Color.fromRGBO(114, 192, 255, 1),
           activeColor: Colors.white,
-          color: Colors.grey.shade400,
+          color: Colors.grey.shade500,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           duration: const Duration(milliseconds: 400),
           gap: 4,
