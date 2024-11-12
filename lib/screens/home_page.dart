@@ -40,67 +40,55 @@ class HomePage extends StatelessWidget {
                 mainAxisSpacing: 16,
                 children: [
                   BoxedServiceTile(
-                    icon: Icons.add_circle_outline,
+                    icon: Icons.thermostat,
                     label: 'Temp Conversion',
+                    color: Colors.blue.shade200,
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => TemperatureConversionPage()),
-                      ); // Navigate to Additions & Remodels page
+                          builder: (context) => TemperatureConversionPage(),
+                        ),
+                      );
                     },
                   ),
                   BoxedServiceTile(
-                    icon: Icons.cleaning_services,
-                    label: 'Cleaning',
+                    icon: Icons.calculate,
+                    label: 'Calculator',
+                    color: Colors.blue.shade200,
                     onTap: () {
-                      // Navigate to Cleaning page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BasicCalculatorPage()),
+                      ); // Navigate to Calculator page
                     },
                   ),
                   BoxedServiceTile(
-                    icon: Icons.color_lens,
-                    label: 'Painting',
+                    icon: Icons.currency_exchange,
+                    label: 'Currency\nConversion',
+                    color: Colors.blue.shade200,
                     onTap: () {
-                      // Navigate to Painting page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => CurrencyConversionPage()),
+                      ); // Navigate to Currency Conversion page
                     },
                   ),
                   BoxedServiceTile(
-                    icon: Icons.ac_unit,
-                    label: 'Heating',
+                    icon: Icons.calculate_outlined,
+                    label: 'Calorie\nCalculator',
+                    color: Colors.blue.shade200,
                     onTap: () {
-                      // Navigate to Heating page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                CalorieCalculatorPage()), // Add Calorie Calculator Button
+                      ); // Navigate to Calorie Calculator page
                     },
                   ),
-                  BoxedServiceTile(
-                    icon: Icons.plumbing,
-                    label: 'Plumbing',
-                    onTap: () {
-                      // Navigate to Plumbing page
-                    },
-                  ),
-                  BoxedServiceTile(
-                    icon: Icons.electrical_services,
-                    label: 'Electrical',
-                    onTap: () {
-                      // Navigate to Electrical page
-                    },
-                  ),
-                ],
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // Navigate to Home Care Scheduler page
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: Size(double.infinity, 48),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.access_time),
-                  SizedBox(width: 8),
-                  Text('Home Care Scheduler'),
                 ],
               ),
             ),
@@ -115,12 +103,14 @@ class BoxedServiceTile extends StatelessWidget {
   final IconData icon;
   final String label;
   final VoidCallback onTap;
+  final Color color; // Add a color property
 
   const BoxedServiceTile({
     Key? key,
     required this.icon,
     required this.label,
     required this.onTap,
+    this.color = Colors.white, // Default color
   }) : super(key: key);
 
   @override
@@ -130,7 +120,7 @@ class BoxedServiceTile extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: color, // Use the color property
           borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
