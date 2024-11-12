@@ -54,7 +54,7 @@ class _CurrencyConversionPageState extends State<CurrencyConversionPage> {
     setState(() {
       if (input == 'C') {
         _amount = "0";
-      } else if (input == '→') {
+      } else if (input == 'swap') {
         final temp = _fromCurrency;
         _fromCurrency = _toCurrency;
         _toCurrency = temp;
@@ -101,15 +101,33 @@ class _CurrencyConversionPageState extends State<CurrencyConversionPage> {
             '+',
             '0',
             '.',
-            '→'
+            'swap'
           ];
           if (index < symbols.length) {
-            final number = symbols[index];
-            return _buildCalculatorButton(number);
+            final symbol = symbols[index];
+            if (symbol == 'swap') {
+              return _buildIconButton(Icons.swap_vert, symbol);
+            } else {
+              return _buildCalculatorButton(symbol);
+            }
           }
           return const SizedBox();
         }
       },
+    );
+  }
+
+  Widget _buildIconButton(IconData icon, String label) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.blue.shade400,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: IconButton(
+        icon: Icon(icon, color: Colors.white),
+        iconSize: 24,
+        onPressed: () => _updateAmount(label),
+      ),
     );
   }
 

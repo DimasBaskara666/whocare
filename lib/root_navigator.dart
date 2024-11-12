@@ -23,10 +23,10 @@ class _RootNavigatorState extends State<RootNavigator> {
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
         child: GNav(
           rippleColor: Colors.blue.shade900,
-          tabBackgroundColor: const Color.fromRGBO(114, 192, 255, 1),
+          tabBackgroundColor: Colors.blue.shade500,
           hoverColor: const Color.fromRGBO(114, 192, 255, 1),
           activeColor: Colors.white,
-          color: Colors.grey.shade500,
+          color: Colors.grey.shade600,
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           duration: const Duration(milliseconds: 400),
           gap: 4,

@@ -46,7 +46,7 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
                       decoration: BoxDecoration(
                         color: selectedGender == 'male'
                             ? Colors.blue.withOpacity(0.1)
-                            : Colors.grey[100],
+                            : Colors.blue.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
                           color: selectedGender == 'male'
@@ -72,7 +72,7 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
                       decoration: BoxDecoration(
                         color: selectedGender == 'female'
                             ? Colors.blue.withOpacity(0.1)
-                            : Colors.grey[100],
+                            : Colors.blue.withOpacity(0.1),
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
                           color: selectedGender == 'female'
@@ -278,10 +278,17 @@ class _BMICalculatorPageState extends State<BMICalculatorPage> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  double heightInMeters = (feet * 30.48 + inches * 2.54) / 100;
-                  double weightInKg = weight * 0.453592;
+                  // Convert height to meters
+                  double heightInMeters = ((feet * 12) + inches) * 0.0254;
+
+                  // Convert weight to kg if it's in pounds
+                  num weightInKg =
+                      weightUnit == 'lbs' ? weight * 0.453592 : weight;
+
+                  // Calculate BMI
                   double bmi = weightInKg / (heightInMeters * heightInMeters);
 
+                  // Navigate to result page
                   Navigator.push(
                     context,
                     MaterialPageRoute(
