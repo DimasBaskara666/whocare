@@ -436,17 +436,27 @@ class _ProfilePageState extends State<ProfilePage> {
 
             // Save Button
             ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    // Save profile logic here
-                    _showSnackBar('Profile saved successfully!');
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  // Save profile logic here
+                  _showSnackBar('Profile saved successfully!');
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Text('Save Profile',
-                    style: TextStyle(color: Colors.blue))),
+              ),
+              child: const Text(
+                'Save Profile',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+            ),
           ],
         ),
       ),
