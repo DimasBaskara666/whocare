@@ -22,7 +22,6 @@ class _RootNavigatorState extends State<RootNavigator> {
       bottomNavigationBar: Container(
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
         child: GNav(
-          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           rippleColor: Colors.blue.shade900,
           tabBackgroundColor: const Color.fromRGBO(114, 192, 255, 1),
           hoverColor: const Color.fromRGBO(114, 192, 255, 1),

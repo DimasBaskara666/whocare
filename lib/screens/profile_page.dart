@@ -125,6 +125,8 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: const Text('Profile'),
         centerTitle: true,
+        scrolledUnderElevation: 0,
+        // forceMaterialTransparency: true,
         actions: [
           IconButton(
             icon: const Icon(Icons.save),
