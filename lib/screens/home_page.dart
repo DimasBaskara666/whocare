@@ -60,7 +60,7 @@ class HomePage extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => BasicCalculatorPage()),
+                            builder: (context) => CalculatorPage()),
                       ); // Navigate to Calculator page
                     },
                   ),
