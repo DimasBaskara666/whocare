@@ -171,16 +171,6 @@ class _CalorieCalculatorPageState extends State<CalorieCalculatorPage> {
         centerTitle: true,
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.blue[50]!,
-              Colors.blue[100]!,
-            ],
-          ),
-        ),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(

@@ -188,7 +188,6 @@ class _CurrencyConversionPageState extends State<CurrencyConversionPage> {
       appBar: AppBar(
         title: const Text('Currency Converter'),
       ),
-      backgroundColor: Colors.white,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),

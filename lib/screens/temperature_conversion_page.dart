@@ -19,7 +19,6 @@ class _TemperatureConversionPageState extends State<TemperatureConversionPage> {
       appBar: AppBar(
         title: Text('Temperature Conversion'),
       ),
-      backgroundColor: Colors.white,
       body: Center(
         child: Padding(
           padding: EdgeInsets.symmetric(
