@@ -52,6 +52,18 @@ class _ProfilePageState extends State<ProfilePage> {
       initialDate: _selectedDate,
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Colors.blue,
+              onPrimary: Colors.white,
+              onSurface: Colors.black,
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
     if (picked != null && picked != _selectedDate) {
       setState(() {
@@ -64,6 +76,18 @@ class _ProfilePageState extends State<ProfilePage> {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: _selectedTime,
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Colors.blue,
+              onPrimary: Colors.white,
+              onSurface: Colors.black,
+            ),
+          ),
+          child: child!,
+        );
+      },
     );
     if (picked != null && picked != _selectedTime) {
       setState(() {
@@ -96,11 +120,13 @@ class _ProfilePageState extends State<ProfilePage> {
             title: const Text('Profile'),
             centerTitle: true,
             floating: true,
+            elevation: 0,
+            scrolledUnderElevation: 0,
             actions: [
               IconButton(
                 icon: const Icon(Icons.save),
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
+                  if (_formKey.currentState!.validate()) {  
                     _showSnackBar('Profile updated successfully!');
                   }
                 },
@@ -321,6 +347,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   _isSubscribed = value!;
                 });
               },
+              fillColor: WidgetStateProperty.resolveWith((states) {
+                if (!states.contains(WidgetState.selected)) {
+                  return Colors.transparent;
+                }
+                return Colors.blue;
+              }),
             ),
             SwitchListTile(
               title: const Text('Enable notifications'),
@@ -342,14 +374,20 @@ class _ProfilePageState extends State<ProfilePage> {
     return Row(
       children: [
         Radio<String>(
-          value: 'Male',
-          groupValue: _selectedGender,
-          onChanged: (value) {
-            setState(() {
-              _selectedGender = value!;
-            });
-          },
-        ),
+            value: 'Male',
+            groupValue: _selectedGender,
+            onChanged: (value) {
+              setState(() {
+                _selectedGender = value!;
+              });
+            },
+            fillColor: WidgetStateProperty.resolveWith<Color>(
+                (Set<WidgetState> states) {
+              if (states.contains(WidgetState.disabled)) {
+                return Colors.blue.withOpacity(.32);
+              }
+              return Colors.blue;
+            })),
         const Text('Male'),
         Radio<String>(
           value: 'Female',
@@ -359,6 +397,13 @@ class _ProfilePageState extends State<ProfilePage> {
               _selectedGender = value!;
             });
           },
+          fillColor:
+              WidgetStateProperty.resolveWith<Color>((Set<WidgetState> states) {
+            if (states.contains(WidgetState.disabled)) {
+              return Colors.blue.withOpacity(.32);
+            }
+            return Colors.blue;
+          }),
         ),
         const Text('Female'),
       ],
@@ -371,6 +416,7 @@ class _ProfilePageState extends State<ProfilePage> {
       children: _interests.map((interest) {
         return FilterChip(
           label: Text(interest),
+          selectedColor: Colors.blue[100],
           selected: _selectedInterests.contains(interest),
           onSelected: (bool selected) {
             setState(() {

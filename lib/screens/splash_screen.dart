@@ -23,8 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor:
-          Color.fromRGBO(0, 0, 0, 1), // Warna background sesuai dengan tema
+      backgroundColor: Colors.blue, // Warna background sesuai dengan tema
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -43,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
             CircleAvatar(
               radius: 100,
               backgroundImage: AssetImage(
-                  'assets/dimas.jpg'), // ganti dengan foto Anda di folder assets
+                  'assets/images/dimas.jpg'), // ganti dengan foto Anda di folder assets
             ),
             SizedBox(height: 10),
             // NIM dan Nama
