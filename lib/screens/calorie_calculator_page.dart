@@ -1,64 +1,166 @@
 import 'package:flutter/material.dart';
 
 class CalorieCalculatorPage extends StatefulWidget {
-  const CalorieCalculatorPage({Key? key}) : super(key: key);
+  const CalorieCalculatorPage({super.key});
 
   @override
   State<CalorieCalculatorPage> createState() => _CalorieCalculatorPageState();
 }
 
 class _CalorieCalculatorPageState extends State<CalorieCalculatorPage> {
-  final _formKey = GlobalKey<FormState>();
+  bool isMetric = false;
+  String gender = 'Male';
+  int age = 25;
+  // Update height variables
+  int feet = 5;
+  int inches = 5;
+  int heightCm = 165;
+  // Update weight variables
+  int weightLbs = 125;
+  int weightKg = 57;
+  String activityLevel = 'Sedentary';
+  double? result;
 
-  // Input controllers
-  final _ageController = TextEditingController();
-  final _heightController = TextEditingController();
-  final _weightController = TextEditingController();
+  final List<String> activityLevels = [
+    'Sedentary',
+    'Light Activity',
+    'Moderate Activity',
+    'Very Active',
+    'Extra Active'
+  ];
 
-  // Form values
-  String _selectedGender = 'Male';
-  String _selectedActivityLevel = 'Moderate';
-  double _calories = 0.0;
-
-  // Activity levels with multipliers
-  final Map<String, double> _activityLevels = {
-    'Sedentary (little or no exercise)': 1.2,
-    'Light (light exercise/sports 1-3 days/week)': 1.375,
-    'Moderate (moderate exercise/sports 3-5 days/week)': 1.55,
-    'Very Active (hard exercise/sports 6-7 days a week)': 1.725,
-    'Super Active (very hard exercise/physical job)': 1.9,
-  };
-
-  // Calculate daily caloric needs based on the Harris-Benedict Equation
-  void _calculateCalories() {
-    if (_formKey.currentState!.validate()) {
-      int age = int.parse(_ageController.text);
-      double height = double.parse(_heightController.text);
-      double weight = double.parse(_weightController.text);
-      double bmr;
-
-      if (_selectedGender == 'Male') {
-        // BMR calculation for men
-        bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
-      } else {
-        // BMR calculation for women
-        bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
-      }
-
-      // Adjust BMR by activity level
-      double activityMultiplier = _activityLevels[_selectedActivityLevel]!;
-      setState(() {
-        _calories = bmr * activityMultiplier;
-      });
+  // Add this method to handle height display
+  String getHeightDisplay() {
+    if (isMetric) {
+      return '$heightCm cm';
+    } else {
+      return "$feet'$inches\"";
     }
   }
 
-  @override
-  void dispose() {
-    _ageController.dispose();
-    _heightController.dispose();
-    _weightController.dispose();
-    super.dispose();
+  // Add this method to handle weight display
+  String getWeightDisplay() {
+    if (isMetric) {
+      return '$weightKg kg';
+    } else {
+      return '$weightLbs lbs';
+    }
+  }
+
+  double _getActivityMultiplier() {
+    switch (activityLevel) {
+      case 'Sedentary':
+        return 1.2;
+      case 'Light Activity':
+        return 1.375;
+      case 'Moderate Activity':
+        return 1.55;
+      case 'Very Active':
+        return 1.725;
+      case 'Extra Active':
+        return 1.9;
+      default:
+        return 1.2;
+    }
+  }
+
+  double _getHeightInCm() {
+    if (isMetric) {
+      return heightCm.toDouble();
+    } else {
+      return (feet * 30.48) + (inches * 2.54);
+    }
+  }
+
+  void calculateCalories() {
+    double bmr;
+    final weightInKg = isMetric ? weightKg : (weightLbs * 0.453592);
+
+    if (gender == 'Male') {
+      bmr = 88.362 +
+          (13.397 * weightInKg) +
+          (4.799 * _getHeightInCm()) -
+          (5.677 * age);
+    } else {
+      bmr = 447.593 +
+          (9.247 * weightInKg) +
+          (3.098 * _getHeightInCm()) -
+          (4.330 * age);
+    }
+
+    double activityMultiplier = _getActivityMultiplier();
+    setState(() {
+      result = bmr * activityMultiplier;
+    });
+  }
+
+  void decreaseHeight() {
+    setState(() {
+      if (isMetric) {
+        if (heightCm > 50) heightCm--;
+      } else {
+        if (inches > 0) {
+          inches--;
+        } else if (feet > 0) {
+          feet--;
+          inches = 11;
+        }
+      }
+    });
+  }
+
+  void increaseHeight() {
+    setState(() {
+      if (isMetric) {
+        if (heightCm < 250) heightCm++;
+      } else {
+        if (inches < 11) {
+          inches++;
+        } else {
+          feet++;
+          inches = 0;
+        }
+      }
+    });
+  }
+
+  // Update weight controls
+  void decreaseWeight() {
+    setState(() {
+      if (isMetric) {
+        if (weightKg > 20) weightKg--;
+      } else {
+        if (weightLbs > 44) weightLbs--;
+      }
+    });
+  }
+
+  void increaseWeight() {
+    setState(() {
+      if (isMetric) {
+        if (weightKg < 200) weightKg++;
+      } else {
+        if (weightLbs < 440) weightLbs++;
+      }
+    });
+  }
+
+  // Update unit toggle
+  void toggleUnits() {
+    setState(() {
+      isMetric = !isMetric;
+      if (isMetric) {
+        // Convert US to metric
+        heightCm = ((feet * 30.48) + (inches * 2.54)).round();
+        weightKg = (weightLbs * 0.453592).round();
+      } else {
+        // Convert metric to US
+        final totalInches = (heightCm / 2.54).round();
+        feet = totalInches ~/ 12;
+        inches = totalInches % 12;
+        weightLbs = (weightKg * 2.20462).round();
+      }
+    });
   }
 
   @override
@@ -66,147 +168,233 @@ class _CalorieCalculatorPageState extends State<CalorieCalculatorPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Calorie Calculator'),
-        backgroundColor: Colors.blue,
+        centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-            children: [
-              // Age input
-              TextFormField(
-                controller: _ageController,
-                decoration: const InputDecoration(
-                  labelText: 'Age',
-                  border: OutlineInputBorder(),
-                ),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your age';
-                  }
-                  if (int.tryParse(value) == null) {
-                    return 'Please enter a valid number';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-
-              // Height input
-              TextFormField(
-                controller: _heightController,
-                decoration: const InputDecoration(
-                  labelText: 'Height (cm)',
-                  border: OutlineInputBorder(),
-                ),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your height';
-                  }
-                  if (double.tryParse(value) == null) {
-                    return 'Please enter a valid number';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-
-              // Weight input
-              TextFormField(
-                controller: _weightController,
-                decoration: const InputDecoration(
-                  labelText: 'Weight (kg)',
-                  border: OutlineInputBorder(),
-                ),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your weight';
-                  }
-                  if (double.tryParse(value) == null) {
-                    return 'Please enter a valid number';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-
-              // Gender selection
-              const Text('Gender'),
-              Row(
-                children: [
-                  Radio<String>(
-                    value: 'Male',
-                    groupValue: _selectedGender,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedGender = value!;
-                      });
-                    },
-                  ),
-                  const Text('Male'),
-                  Radio<String>(
-                    value: 'Female',
-                    groupValue: _selectedGender,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedGender = value!;
-                      });
-                    },
-                  ),
-                  const Text('Female'),
-                ],
-              ),
-              const SizedBox(height: 16),
-
-              // Activity level selection
-              DropdownButtonFormField<String>(
-                decoration: const InputDecoration(
-                  labelText: 'Activity Level',
-                  border: OutlineInputBorder(),
-                ),
-                value: _selectedActivityLevel,
-                items: _activityLevels.keys.map((String level) {
-                  return DropdownMenuItem(
-                    value: level,
-                    child: Text(level),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedActivityLevel = newValue!;
-                  });
-                },
-              ),
-              const SizedBox(height: 24),
-
-              // Calculate button
-              ElevatedButton(
-                onPressed: _calculateCalories,
-                style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  backgroundColor: Colors.blue,
-                ),
-                child: const Text(
-                  'Calculate Calories',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              const SizedBox(height: 24),
-
-              // Display the calculated calories
-              if (_calories > 0)
-                Text(
-                  'Your daily caloric needs: ${_calories.toStringAsFixed(2)} kcal',
-                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.blue[50]!,
+              Colors.blue[100]!,
             ],
           ),
         ),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 20),
+
+              // Units Toggle
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            !isMetric ? Colors.blue : Colors.grey[300],
+                        foregroundColor:
+                            !isMetric ? Colors.white : Colors.black,
+                      ),
+                      onPressed: () => toggleUnits(),
+                      child: const Text('U.S. units'),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            isMetric ? Colors.blue : Colors.grey[300],
+                        foregroundColor: isMetric ? Colors.white : Colors.black,
+                      ),
+                      onPressed: () => toggleUnits(),
+                      child: const Text('Metric units'),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+
+              // Gender Selection
+              Row(
+                children: [
+                  const Text('Gender', style: TextStyle(fontSize: 16)),
+                  const SizedBox(width: 20),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          gender == 'Male' ? Colors.blue : Colors.grey[300],
+                      foregroundColor:
+                          gender == 'Male' ? Colors.white : Colors.black,
+                    ),
+                    onPressed: () => setState(() => gender = 'Male'),
+                    child: const Text('Male'),
+                  ),
+                  const SizedBox(width: 10),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor:
+                          gender == 'Female' ? Colors.blue : Colors.grey[300],
+                      foregroundColor:
+                          gender == 'Female' ? Colors.white : Colors.black,
+                    ),
+                    onPressed: () => setState(() => gender = 'Female'),
+                    child: const Text('Female'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+
+              // Age Input
+              _buildNumberInput(
+                label: 'Age',
+                value: age.toString(),
+                onDecrease: () => setState(() {
+                  if (age > 1) age--;
+                }),
+                onIncrease: () => setState(() {
+                  if (age < 120) age++;
+                }),
+              ),
+
+              // Height Input
+              _buildNumberInput(
+                label: 'Height',
+                value: getHeightDisplay(),
+                onDecrease: decreaseHeight,
+                onIncrease: increaseHeight,
+              ),
+
+              // Weight Input
+              _buildNumberInput(
+                label: 'Weight',
+                value: getWeightDisplay(),
+                onDecrease: decreaseWeight,
+                onIncrease: increaseWeight,
+              ),
+
+              // Activity Level Dropdown
+              Row(
+                children: [
+                  const Text('Activity\nLevel', style: TextStyle(fontSize: 16)),
+                  const SizedBox(width: 20),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: DropdownButton<String>(
+                        value: activityLevel,
+                        isExpanded: true,
+                        dropdownColor: Colors.blue,
+                        style: const TextStyle(color: Colors.white),
+                        underline: Container(),
+                        icon: const Icon(Icons.arrow_drop_down,
+                            color: Colors.white),
+                        onChanged: (String? newValue) {
+                          setState(() => activityLevel = newValue!);
+                        },
+                        items: activityLevels
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 30),
+
+              // Calculate Button
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                  ),
+                  onPressed: () {
+                    calculateCalories();
+                  },
+                  child: const Text('Calculate'),
+                ),
+              ),
+              if (result != null) ...[
+                const SizedBox(height: 20),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Estimated Daily Calories:',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        '${result!.toStringAsFixed(0)} calories',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNumberInput({
+    required String label,
+    required String value,
+    required VoidCallback onDecrease,
+    required VoidCallback onIncrease,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 60,
+            child: Text(label, style: const TextStyle(fontSize: 16)),
+          ),
+          const SizedBox(width: 20),
+          IconButton(
+            icon: const Icon(Icons.remove_circle_outline),
+            onPressed: onDecrease,
+            color: Colors.blue,
+          ),
+          Text(
+            value,
+            style: const TextStyle(fontSize: 16),
+          ),
+          IconButton(
+            icon: const Icon(Icons.add_circle_outline),
+            onPressed: onIncrease,
+            color: Colors.blue,
+          ),
+        ],
       ),
     );
   }

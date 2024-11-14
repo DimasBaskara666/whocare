@@ -27,7 +27,7 @@ class _TemperatureConversionPageState extends State<TemperatureConversionPage> {
           child: Container(
             padding: EdgeInsets.all(16.0),
             decoration: BoxDecoration(
-              color: Colors.blue.shade100,
+              color: Colors.blue.shade400,
               borderRadius: BorderRadius.circular(16.0),
               boxShadow: [
                 BoxShadow(
@@ -73,7 +73,8 @@ class _TemperatureConversionPageState extends State<TemperatureConversionPage> {
                   decoration: InputDecoration(
                     hintText: 'Temperature',
                     hintStyle: TextStyle(
-                      color: Colors.grey.shade500,
+                      decorationColor: Colors.grey.shade700,
+                      // color: Colors.grey.shade500,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
@@ -81,8 +82,7 @@ class _TemperatureConversionPageState extends State<TemperatureConversionPage> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8.0),
-                      borderSide:
-                          BorderSide(color: Colors.blue.shade400, width: 2.0),
+                      borderSide: BorderSide(color: Colors.white, width: 2.0),
                     ),
                   ),
                   style: TextStyle(
@@ -117,7 +117,7 @@ class _TemperatureConversionPageState extends State<TemperatureConversionPage> {
           Icon(
             icon,
             size: 32.0,
-            color: isSelected ? Colors.blue.shade800 : Colors.black,
+            color: isSelected ? Colors.black : Colors.white,
           ),
           SizedBox(
             height: 8.0,
@@ -127,7 +127,7 @@ class _TemperatureConversionPageState extends State<TemperatureConversionPage> {
             style: TextStyle(
               fontSize: 16.0,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-              color: isSelected ? Colors.blue.shade800 : Colors.black,
+              color: isSelected ? Colors.black : Colors.white,
             ),
           ),
         ],
@@ -198,7 +198,7 @@ class _TemperatureConversionPageState extends State<TemperatureConversionPage> {
           style: TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
-            color: Colors.grey.shade900,
+            color: Colors.white,
           ),
         ),
         SizedBox(height: 12.0),
@@ -212,7 +212,7 @@ class _TemperatureConversionPageState extends State<TemperatureConversionPage> {
                   entry.key,
                   style: TextStyle(
                     fontSize: 16.0,
-                    color: Colors.grey.shade700,
+                    color: Colors.grey.shade200,
                   ),
                 ),
                 Text(
