@@ -168,7 +168,6 @@ class _CalorieCalculatorPageState extends State<CalorieCalculatorPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Calorie Calculator'),
-        centerTitle: true,
       ),
       body: Container(
         child: Padding(
